@@ -58,7 +58,8 @@ st.markdown(
       .stApp h2 {{ font-size: 1.65rem !important; margin-top: 2.2rem; }}
       .stApp h3 {{ font-family: 'Newsreader', 'Times New Roman', Georgia, serif !important;
                    font-size: 0.92rem !important; font-weight: 500 !important;
-                   margin: 0.2rem 0 0.7rem 0; letter-spacing: 0.17em; color: {MUTED}; }}
+                   margin: 2.2rem 0 0.45rem 0; padding-bottom: 0;
+                   letter-spacing: 0.17em; color: {MUTED}; }}
       p, li, td, th, label {{ color: {TEXT}; }}
       .stTabs [data-baseweb="tab-list"] {{ gap: 2rem; border-bottom: 1px solid {RULE}; }}
       .stTabs [data-baseweb="tab"] {{ font-size: 1.05rem; padding: 0 0 0.7rem 0;
@@ -150,7 +151,7 @@ def insight(text):
 
 def dark(fig, height=380, ytitle=None, legend=True):
     fig.update_layout(
-        height=height, margin=dict(l=8, r=8, t=34, b=8),
+        height=height, margin=dict(l=8, r=8, t=34 if legend else 6, b=8),
         plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Newsreader, Times New Roman, Georgia, serif", size=13, color=MUTED),
         showlegend=legend,
@@ -178,10 +179,10 @@ with t1:
     advocates = (lemfi["rating"] >= 4).mean() * 100
 
     c = st.columns(4)
-    kpi(c[0], "Price spread, GBP-NGN", f"{spread_gbp:.2f}pp", icon="spread")
-    kpi(c[1], "LemFi advocates", f"{advocates:.0f}%", "good", icon="star")
-    kpi(c[2], "1-star: delay or support", f"{delay_support:.0f}%", "bad", icon="alert")
-    kpi(c[3], "Rating when FX mentioned",
+    kpi(c[0], "Price spread", f"{spread_gbp:.2f}pp", icon="spread")
+    kpi(c[1], "Advocates", f"{advocates:.0f}%", "good", icon="star")
+    kpi(c[2], "Service one-stars", f"{delay_support:.0f}%", "bad", icon="alert")
+    kpi(c[3], "Rate sentiment",
         f"{lemfi[lemfi['Exchange rate']]['rating'].mean():.2f}", icon="tag")
 
     left, right = st.columns(2, gap="large")
